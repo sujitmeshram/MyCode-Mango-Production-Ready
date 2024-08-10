@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace Mango.Services.CouponAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/coupon")]
     [ApiController]
     public class CouponAPIController : ControllerBase
     {
@@ -30,12 +30,12 @@ namespace Mango.Services.CouponAPI.Controllers
             try
             {
                 IEnumerable<Coupon> objList = _db.Coupons.ToList();
-                _response.Result= _mapper.Map<IEnumerable<CouponDto>>(objList);
-               
+                _response.Result = _mapper.Map<IEnumerable<CouponDto>>(objList);
+
             }
             catch (Exception ex)
             {
-                _response.IsSuccess=false;
+                _response.IsSuccess = false;
                 _response.Message = ex.Message;
             }
             return _response;
@@ -51,9 +51,9 @@ namespace Mango.Services.CouponAPI.Controllers
 
             try
             {
-                Coupon obj= _db.Coupons.First(u=>u.CouponId==id);
-                _response.Result=_mapper.Map<CouponDto>(obj);            //converting Coupon to CouponDto
-             
+                Coupon obj = _db.Coupons.First(u => u.CouponId == id);
+                _response.Result = _mapper.Map<CouponDto>(obj);            //converting Coupon to CouponDto
+
             }
             catch (Exception ex)
             {
@@ -92,7 +92,7 @@ namespace Mango.Services.CouponAPI.Controllers
         {
             try
             {
-                Coupon obj=_mapper.Map<Coupon>(couponDto);
+                Coupon obj = _mapper.Map<Coupon>(couponDto);
                 _db.Coupons.Add(obj);
                 _db.SaveChanges();
 
@@ -131,12 +131,12 @@ namespace Mango.Services.CouponAPI.Controllers
         }
 
         [HttpDelete]
+        [Route("{id:int}")]
         public ResponseDto Delete(int id)
         {
             try
             {
                 Coupon obj = _db.Coupons.First(u=> u.CouponId == id);
-
                 _db.Coupons.Remove(obj);
                 _db.SaveChanges();
 
